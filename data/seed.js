@@ -1,0 +1,51 @@
+export const SEED_SESSIONS = [
+  { id:1, label:"Séance 1", date:"2025-01-01", duration:40, notes:"", exercises:[
+    { name:"Développé couché haltères", sets:[{kg:20,reps:20,note:"2min pause"},{kg:30,reps:10},{kg:30,reps:5},{kg:25,reps:7}] },
+    { name:"Curl haltères alterné", sets:[{kg:27,reps:15},{kg:32,reps:9},{kg:36,reps:5}] },
+    { name:"Lat Pulldown machine", sets:[{kg:20,reps:20},{kg:30,reps:15},{kg:40,reps:5}] },
+    { name:"Hack squat machine", sets:[{kg:10,reps:10},{kg:10,reps:10},{kg:10,reps:6}] },
+    { name:"Développé couché haltères", sets:[{kg:16,reps:10},{kg:18,reps:3}] },
+  ]},
+  { id:2, label:"Séance 2", date:"2025-01-02", duration:70, notes:"Pas fait jambes. À jeun.", exercises:[
+    { name:"Développé couché haltères", sets:[{kg:16,reps:15},{kg:18,reps:9},{kg:20,reps:3},{kg:20,reps:3}], note:"Pas congestionné, activation pecto difficile" },
+    { name:"Développé militaire haltères", sets:[{kg:12,reps:13},{kg:12,reps:12},{kg:14,reps:5},{kg:14,reps:1}] },
+    { name:"Développé couché haltères", sets:[{kg:15,reps:9},{kg:15,reps:9},{kg:20,reps:2}], note:"Reps variables" },
+    { name:"Lat Pulldown machine", sets:[{kg:32,reps:15},{kg:39,reps:14},{kg:45,reps:5},{kg:45,reps:4}] },
+    { name:"Curl haltères alterné", sets:[{kg:23,reps:10},{kg:27,reps:7},{kg:32,reps:1}] },
+    { name:"Leg press machine", sets:[{kg:10,reps:15},{kg:20,reps:15},{kg:25,reps:10}] },
+  ]},
+  { id:3, label:"Séance 3", date:"2025-01-03", duration:40, notes:"2 jours d'affilée, fatigue accumulée", exercises:[
+    { name:"Développé couché haltères", sets:[{kg:16,reps:15},{kg:18,reps:8},{kg:20,reps:1},{kg:20,reps:0}] },
+    { name:"Leg press machine", sets:[{kg:73,reps:15},{kg:86,reps:15},{kg:100,reps:15},{kg:113,reps:10}] },
+    { name:"Lat Pulldown machine", sets:[{kg:32,reps:15},{kg:39,reps:9},{kg:45,reps:5}] },
+    { name:"Dips triceps", sets:[{kg:45,reps:15},{kg:50,reps:6},{kg:54,reps:4}] },
+  ]},
+  { id:4, label:"Séance 3bis", date:"2025-01-05", duration:70, notes:"", exercises:[
+    { name:"Développé couché haltères", sets:[{kg:16,reps:15},{kg:18,reps:15},{kg:20,reps:6},{kg:22,reps:5}] },
+    { name:"Développé couché haltères", sets:[{kg:20,reps:9},{kg:20,reps:3},{kg:20,reps:9},{kg:25,reps:3}] },
+    { name:"Curl haltères alterné", sets:[{kg:23,reps:15},{kg:27,reps:15},{kg:32,reps:8},{kg:36,reps:2}] },
+    { name:"Lat Pulldown machine", sets:[{kg:20,reps:15},{kg:30,reps:15},{kg:40,reps:4}] },
+    { name:"Glute kickback machine", sets:[{kg:5,reps:15},{kg:10,reps:15},{kg:15,reps:10},{kg:20,reps:9}] },
+    { name:"Hack squat machine", sets:[{kg:0,reps:7},{kg:5,reps:5}] },
+  ]},
+  { id:5, label:"Séance 4", date:"2025-01-08", duration:53, notes:"", exercises:[
+    { name:"Développé couché haltères", sets:[{kg:18,reps:15},{kg:20,reps:10},{kg:22,reps:6},{kg:24,reps:4}] },
+    { name:"Développé couché haltères", sets:[{kg:20,reps:12},{kg:25,reps:4},{kg:25,reps:3}] },
+    { name:"Lat Pulldown machine", sets:[{kg:30,reps:15},{kg:40,reps:5}] },
+    { name:"Hack squat machine", sets:[{kg:10,reps:10},{kg:15,reps:5},{kg:15,reps:5}] },
+    { name:"Curl haltères alterné", sets:[{kg:27,reps:15},{kg:32,reps:10},{kg:36,reps:4}] },
+  ]},
+  { id:6, label:"Séance 5", date:"2025-01-10", duration:74, notes:"À jeun", exercises:[
+    { name:"Développé couché haltères", sets:[{kg:18,reps:15},{kg:20,reps:14},{kg:22,reps:6},{kg:24,reps:2}] },
+    { name:"Développé couché haltères", sets:[{kg:20,reps:15},{kg:20,reps:10},{kg:30,reps:2}] },
+    { name:"Lat Pulldown machine", sets:[{kg:32,reps:15},{kg:39,reps:15},{kg:45,reps:6},{kg:52,reps:5}] },
+    { name:"Glute kickback machine", sets:[{kg:10,reps:15},{kg:20,reps:15},{kg:25,reps:11},{kg:30,reps:10}] },
+    { name:"Hack squat machine", sets:[{kg:10,reps:13},{kg:15,reps:6}] },
+  ]},
+  { id:7, label:"Séance 6", date:"2025-01-12", duration:null, notes:"", exercises:[
+    { name:"Développé couché haltères", sets:[{kg:20,reps:15},{kg:22,reps:9},{kg:24,reps:6}], note:"26kg fail" },
+    { name:"Développé militaire haltères", sets:[{kg:12,reps:15},{kg:14,reps:15},{kg:16,reps:10}], note:"18kg raté" },
+    { name:"Hack squat machine", sets:[{kg:10,reps:11},{kg:15,reps:8}], note:"20kg fail" },
+    { name:"Curl haltères alterné", sets:[{kg:27,reps:15},{kg:32,reps:11},{kg:36,reps:2}], note:"Blocage incompris" },
+  ]},
+];
