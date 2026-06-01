@@ -1,5 +1,5 @@
 export const S = {
-  screen: { background:"#0c0c0c", minHeight:"100vh", fontFamily:"'IBM Plex Mono', 'Courier New', monospace", color:"#e2e2e2", maxWidth:430, margin:"0 auto", display:"flex", flexDirection:"column" },
+  screen: { background:"#0c0c0c", minHeight:"100vh", fontFamily:"'IBM Plex Mono', 'Courier New', monospace", color:"#e2e2e2", maxWidth:430, margin:"0 auto", display:"flex", flexDirection:"column", overflowX:"hidden" },
   topBar: { background:"#111", borderBottom:"1px solid #1f1f1f", padding:"12px 16px", display:"flex", alignItems:"center", gap:10, position:"sticky", top:0, zIndex:20 },
   topTitle: { flex:1, fontWeight:700, fontSize:15, letterSpacing:"-0.3px" },
   backBtn: { background:"none", border:"none", color:"#a3e635", fontSize:22, cursor:"pointer", padding:"0 4px", lineHeight:1 },

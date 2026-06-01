@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   setVolume, exerciseVolume, sessionVolume,
   bestSet, estimate1RM, sessionStats, byMuscleGroup, exerciseTimeline,
+  totalReps, totalSets, totalDuration, volumeSeries, personalRecords,
 } from "./metrics.js";
 
 const session = {
@@ -42,5 +43,36 @@ describe("metrics", () => {
   it("exerciseTimeline donne les points {date, volume, top} pour un exercice", () => {
     const t = exerciseTimeline([session], "Développé couché haltères");
     expect(t).toEqual([{ date: "2025-01-01", volume: 350, top: 200 }]);
+  });
+});
+
+describe("metrics dashboard", () => {
+  const s2 = {
+    id: 2, date: "2025-01-02", duration: 40, exercises: [
+      { name: "Squat barre", sets: [{ kg: 60, reps: 3 }] },
+    ],
+  };
+  const sessions = [{ ...session, duration: 60 }, s2];
+
+  it("totalReps somme toutes les répétitions", () => {
+    expect(totalReps([session])).toBe(10 + 5 + 4);
+  });
+  it("totalSets compte toutes les séries", () => {
+    expect(totalSets([session])).toBe(3);
+  });
+  it("totalDuration somme les durées (ignore null)", () => {
+    expect(totalDuration(sessions)).toBe(100);
+    expect(totalDuration([{ exercises: [] }])).toBe(0);
+  });
+  it("volumeSeries renvoie {date,label,volume} trié par date", () => {
+    const v = volumeSeries(sessions);
+    expect(v.map((x) => x.volume)).toEqual([550, 180]);
+    expect(v[0].date).toBe("2025-01-01");
+  });
+  it("personalRecords trie par 1RM estimé décroissant", () => {
+    const pr = personalRecords(sessions);
+    expect(pr[0].name).toBe("Squat barre");
+    expect(pr[0]).toMatchObject({ kg: 60, reps: 3 });
+    expect(pr.find((p) => p.name === "Développé couché haltères")).toMatchObject({ kg: 30, reps: 5 });
   });
 });
