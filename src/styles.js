@@ -1,99 +1,123 @@
+// Design system « Coach » — sombre doux, cartes arrondies, vert émeraude.
+const FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif";
+
+const C = {
+  bg: "#14151a", card: "#1e2128", card2: "#191b21", border: "#262a33", line: "#23262f",
+  text: "#e7e9ee", dim: "#7e8694", white: "#fff",
+  green: "#23c55e", greenDark: "#1f6f43", greenSoft: "rgba(35,197,94,0.13)",
+  orange: "#f59e0b", orangeSoft: "rgba(245,158,11,0.13)",
+  blue: "#7aa2ff", blueSoft: "rgba(122,162,255,0.10)",
+  red: "#f87171", redSoft: "rgba(248,113,113,0.10)",
+};
+export const COLORS = C;
+
 export const S = {
-  screen: { background:"#0c0c0c", minHeight:"100vh", fontFamily:"'IBM Plex Mono', 'Courier New', monospace", color:"#e2e2e2", maxWidth:430, margin:"0 auto", display:"flex", flexDirection:"column", overflowX:"hidden" },
-  topBar: { background:"#111", borderBottom:"1px solid #1f1f1f", padding:"12px 16px", display:"flex", alignItems:"center", gap:10, position:"sticky", top:0, zIndex:20 },
-  topTitle: { flex:1, fontWeight:700, fontSize:15, letterSpacing:"-0.3px" },
-  backBtn: { background:"none", border:"none", color:"#a3e635", fontSize:22, cursor:"pointer", padding:"0 4px", lineHeight:1 },
-  scroll: { flex:1, overflowY:"auto", padding:"14px 16px 100px" },
+  // Layout
+  screen: { background: C.bg, minHeight: "100vh", fontFamily: FONT, color: C.text, maxWidth: 460, margin: "0 auto", display: "flex", flexDirection: "column", overflowX: "hidden" },
+  scroll: { flex: 1, overflowY: "auto", padding: "16px 16px 96px" },
+  topBar: { background: C.bg, borderBottom: `1px solid ${C.line}`, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10, position: "sticky", top: 0, zIndex: 20 },
+  topTitle: { flex: 1, fontWeight: 800, fontSize: 18, letterSpacing: "-0.3px" },
+  backBtn: { background: "none", border: "none", color: C.green, fontSize: 24, cursor: "pointer", padding: "0 4px", lineHeight: 1, fontFamily: FONT },
+  h1: { fontSize: 22, fontWeight: 800, color: C.white, margin: "0 0 4px" },
+  greet: { fontSize: 18, fontWeight: 800, color: C.white },
+  greetSub: { fontSize: 12, color: C.dim, marginTop: 2 },
 
-  homeHeader: { background:"#111", padding:"20px 16px 16px", borderBottom:"1px solid #1f1f1f" },
-  homeLogo: { fontFamily:"'IBM Plex Mono', monospace", fontWeight:800, fontSize:28, letterSpacing:"-1px", marginBottom:14 },
-  homeStats: { display:"flex", gap:16 },
-  stat: { display:"flex", flexDirection:"column" },
-  statN: { fontWeight:800, fontSize:24, color:"#a3e635", lineHeight:1 },
-  statL: { fontSize:11, color:"#444", marginTop:2 },
+  // Tab bar
+  tabBar: { position: "sticky", bottom: 0, display: "flex", background: "rgba(20,21,26,0.95)", backdropFilter: "blur(10px)", borderTop: `1px solid ${C.line}`, zIndex: 30 },
+  tab: { flex: 1, background: "none", border: "none", padding: "9px 0 11px", display: "flex", flexDirection: "column", alignItems: "center", gap: 3, cursor: "pointer", color: C.dim, fontFamily: FONT },
+  tabIcon: { fontSize: 19, lineHeight: 1 },
+  tabLabel: { fontSize: 10, fontWeight: 700 },
 
-  actionRow: { display:"flex", gap:10, marginBottom:14 },
-  bigBtn: { flex:1, background:"#a3e635", color:"#0c0c0c", border:"none", borderRadius:10, padding:"12px 10px", fontWeight:800, fontSize:13, cursor:"pointer", fontFamily:"inherit" },
+  // Sections
+  secLabel: { color: C.dim, fontSize: 12, fontWeight: 700, margin: "20px 2px 9px" },
+  secHead: { display: "flex", justifyContent: "space-between", alignItems: "baseline", margin: "20px 2px 9px" },
+  secMeta: { fontSize: 11, color: "#4a4f5a" },
 
-  exportBox: { background:"#141a0a", border:"1px solid #2a3a1a", borderRadius:12, padding:"14px", marginBottom:16 },
-  exportTitle: { fontWeight:700, fontSize:13, color:"#a3e635", marginBottom:4 },
-  exportSub: { fontSize:11, color:"#556", lineHeight:1.5, marginBottom:10 },
-  exportBtns: { display:"flex", gap:8 },
-  exportBtn: { flex:1, background:"#1f2a0f", border:"1px solid #3a5a1a", borderRadius:8, padding:"8px", color:"#a3e635", fontSize:12, cursor:"pointer", fontFamily:"inherit", fontWeight:700 },
+  // Cards
+  card: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: 14 },
+  cardTitle: { fontSize: 13, fontWeight: 700, color: C.text, marginBottom: 8 },
 
-  secLabel: { fontSize:10, fontWeight:700, color:"#333", letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:8, marginTop:18 },
-  sessionRow: { width:"100%", background:"#141414", border:"1px solid #1e1e1e", borderRadius:10, padding:"12px 14px", display:"flex", alignItems:"center", gap:8, marginBottom:8, cursor:"pointer", textAlign:"left" },
-  sessionLeft: { flex:1 },
-  sessionLabel: { fontWeight:700, fontSize:14 },
-  sessionSub: { fontSize:11, color:"#444", marginTop:3 },
-  chev: { color:"#333", fontSize:20, lineHeight:1 },
+  // Buttons
+  btnPrimary: { width: "100%", background: `linear-gradient(135deg,${C.greenDark},${C.green})`, border: "none", borderRadius: 14, padding: 14, color: C.white, fontSize: 14, fontWeight: 800, cursor: "pointer", fontFamily: FONT },
+  btnGhost: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, padding: "11px 14px", color: C.text, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: FONT },
+  btnDanger: { width: "100%", background: "none", border: `1px solid #3a2226`, borderRadius: 12, padding: 11, color: C.red, fontSize: 13, cursor: "pointer", fontFamily: FONT, marginTop: 10 },
+  pill: { fontSize: 11, padding: "4px 10px", borderRadius: 999, fontWeight: 700, background: C.greenSoft, color: C.green },
 
-  progFullBtn: { width:"100%", background:"#141414", border:"1px solid #1e1e1e", borderRadius:10, padding:"12px 14px", color:"#a3e635", fontWeight:700, fontSize:13, cursor:"pointer", textAlign:"left", fontFamily:"inherit", marginBottom:8 },
-  miniProgRow: { width:"100%", background:"#111", border:"none", borderRadius:8, padding:"10px 14px", display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:6, cursor:"pointer", textAlign:"left" },
-  miniProgName: { fontSize:12, color:"#888" },
-  miniProgVal: { fontSize:12, color:"#a3e635", fontWeight:700 },
+  // Inputs
+  input: { width: "100%", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 12, padding: "11px 12px", color: C.text, fontSize: 14, fontFamily: FONT, boxSizing: "border-box" },
+  miniIn: { width: 70, background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, padding: "9px 8px", color: C.text, fontSize: 15, textAlign: "center", fontFamily: FONT },
+  label: { fontSize: 11, color: C.dim, fontWeight: 700, marginBottom: 4, display: "block" },
+  titleInput: { background: "none", border: "none", color: C.white, fontSize: 17, fontWeight: 800, fontFamily: FONT, width: "100%", outline: "none" },
 
-  heroCard: { background:"#141a0a", border:"1px solid #2a3a1a", borderRadius:14, padding:"20px", textAlign:"center", marginBottom:16 },
-  heroLabel: { fontSize:10, color:"#556", letterSpacing:"0.1em", marginBottom:8, fontWeight:700 },
-  heroVal: { fontSize:36, fontWeight:800, color:"#a3e635", letterSpacing:"-1px", lineHeight:1 },
-  heroUnit: { fontSize:16, color:"#666", fontWeight:400, marginLeft:2 },
-  heroSub: { fontSize:13, color:"#444", marginTop:6 },
+  // Hero objectif
+  heroCard: { background: `linear-gradient(135deg,${C.greenDark},${C.green})`, borderRadius: 20, padding: 16, display: "flex", alignItems: "center", gap: 14, marginBottom: 4 },
+  heroLabel: { color: "#d7ffe6", fontSize: 11, fontWeight: 700 },
+  heroTitle: { color: C.white, fontSize: 17, fontWeight: 800, lineHeight: 1.15, marginTop: 2 },
+  heroSub: { color: "#bff5d3", fontSize: 12, marginTop: 3 },
 
-  barWrap: { marginBottom:12 },
-  barMeta: { display:"flex", justifyContent:"space-between", marginBottom:4 },
-  barName: { fontSize:12, color:"#666" },
-  barNum: { fontSize:12, color:"#a3e635", fontWeight:700 },
-  barTrack: { height:8, background:"#1e1e1e", borderRadius:4, overflow:"hidden" },
-  barFill: { height:"100%", background:"linear-gradient(90deg,#3a6a0a,#a3e635)", borderRadius:4, transition:"width 0.4s" },
+  // Goal rows
+  goalRow: { display: "flex", alignItems: "center", gap: 11, padding: "9px 0" },
+  gbarTrack: { flex: 1, height: 7, background: C.line, borderRadius: 999, overflow: "hidden" },
+  gbarFill: { height: "100%", borderRadius: 999 },
 
-  exCard: { background:"#141414", border:"1px solid #1e1e1e", borderRadius:12, padding:"14px", marginBottom:12 },
-  exCardHead: { display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:8 },
-  exCardName: { fontWeight:700, fontSize:14, color:"#a3e635" },
-  exCardNote: { fontSize:12, color:"#666", fontStyle:"italic", marginBottom:8, lineHeight:1.5 },
-  planTip: { background:"#1a200a", border:"1px solid #2a3a0a", borderRadius:6, padding:"6px 10px", fontSize:12, color:"#8ab44a", marginBottom:8, lineHeight:1.5 },
-  progLink: { background:"none", border:"none", fontSize:16, cursor:"pointer" },
+  // KPI grid
+  kpiGrid: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 },
+  kpi: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "11px 10px" },
+  kpiLabel: { color: C.dim, fontSize: 10, fontWeight: 600 },
+  kpiVal: { color: C.white, fontSize: 18, fontWeight: 800, marginTop: 3 },
 
-  setRow: { display:"flex", alignItems:"center", gap:8, padding:"5px 0", borderTop:"1px solid #1e1e1e" },
-  setIdx: { fontSize:11, color:"#333", width:16 },
-  setKg: { fontSize:14, color:"#e2e2e2", fontWeight:700, minWidth:40 },
-  setReps: { fontSize:14, color:"#e2e2e2", minWidth:40 },
-  setX: { color:"#333", fontSize:14 },
-  setVol: { fontSize:12, color:"#a3e635" },
-  setUnit: { fontSize:10, color:"#444", marginLeft:2 },
-  miniIn: { width:64, background:"#0c0c0c", border:"1px solid #2a2a2a", borderRadius:6, padding:"7px 8px", color:"#e2e2e2", fontSize:14, textAlign:"center", fontFamily:"inherit" },
-  delBtn: { background:"none", border:"none", color:"#333", fontSize:14, cursor:"pointer", padding:"0 4px", marginLeft:"auto" },
-  addSetBtn: { width:"100%", background:"none", border:"1px dashed #222", borderRadius:6, padding:"7px", color:"#444", fontSize:12, cursor:"pointer", fontFamily:"inherit", marginTop:6 },
-  exVol: { textAlign:"right", fontSize:11, color:"#444", marginTop:6 },
+  // List rows
+  row: { width: "100%", background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "12px 14px", display: "flex", alignItems: "center", gap: 11, marginBottom: 8, cursor: "pointer", textAlign: "left", fontFamily: FONT },
+  rowTitle: { fontWeight: 700, fontSize: 14, color: C.text },
+  rowSub: { fontSize: 11.5, color: C.dim, marginTop: 3 },
+  dot: { width: 34, height: 34, borderRadius: 11, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 },
+  chev: { color: "#3a3f4a", fontSize: 20, marginLeft: "auto" },
 
-  totalVolBox: { background:"#141a0a", border:"1px solid #2a3a1a", borderRadius:10, padding:"12px 16px", textAlign:"center", fontSize:14, color:"#a3e635", marginTop:12 },
-  dangerBtn: { width:"100%", background:"none", border:"1px solid #3a1a1a", borderRadius:8, padding:"10px", color:"#7a3a3a", fontSize:12, cursor:"pointer", fontFamily:"inherit", marginTop:20 },
+  // Editor
+  exCard: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: 14, marginBottom: 12 },
+  exCardHead: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8, gap: 8 },
+  exCardName: { fontWeight: 700, fontSize: 14, color: C.text },
+  exCardNote: { fontSize: 12, color: C.dim, fontStyle: "italic", marginBottom: 8, lineHeight: 1.5 },
+  setRow: { display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderTop: `1px solid ${C.line}` },
+  setIdx: { fontSize: 12, color: "#4a4f5a", width: 16 },
+  setUnit: { fontSize: 11, color: C.dim },
+  setX: { color: "#4a4f5a", fontSize: 14 },
+  addSetBtn: { width: "100%", background: "none", border: `1px dashed ${C.border}`, borderRadius: 10, padding: 8, color: C.dim, fontSize: 12, cursor: "pointer", fontFamily: FONT, marginTop: 8 },
+  delBtn: { background: "none", border: "none", color: "#4a4f5a", fontSize: 15, cursor: "pointer", padding: "0 4px", marginLeft: "auto", fontFamily: FONT },
+  exMeta: { textAlign: "right", fontSize: 11, color: C.dim, marginTop: 8 },
+  progBadge: { background: C.orangeSoft, color: C.orange, borderRadius: 8, padding: "6px 10px", fontSize: 11.5, marginBottom: 8, fontWeight: 600 },
 
-  logMeta: { display:"flex", gap:10, marginBottom:10 },
-  metaField: { flex:1, display:"flex", flexDirection:"column", gap:4 },
-  metaLabel: { fontSize:10, color:"#333", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.08em" },
-  metaIn: { background:"#141414", border:"1px solid #1e1e1e", borderRadius:8, padding:"8px 10px", color:"#e2e2e2", fontSize:13, fontFamily:"inherit" },
-  titleInput: { background:"none", border:"none", color:"#e2e2e2", fontSize:15, fontWeight:700, fontFamily:"inherit", width:"100%", outline:"none" },
-  saveTopBtn: { background:"#a3e635", color:"#0c0c0c", border:"none", borderRadius:8, padding:"7px 14px", fontWeight:800, fontSize:13, cursor:"pointer", fontFamily:"inherit" },
+  logMeta: { display: "flex", gap: 10, marginBottom: 12 },
+  metaField: { flex: 1, display: "flex", flexDirection: "column", gap: 4 },
 
-  searchIn: { width:"100%", background:"#141414", border:"1px solid #1e1e1e", borderRadius:8, padding:"10px 12px", color:"#e2e2e2", fontSize:13, fontFamily:"inherit", marginBottom:8, boxSizing:"border-box" },
-  catBtn: { width:"100%", background:"#0f0f0f", border:"1px solid #1e1e1e", borderRadius:8, padding:"10px 14px", color:"#888", fontSize:12, cursor:"pointer", textAlign:"left", fontFamily:"inherit", fontWeight:700, marginBottom:4, display:"flex", justifyContent:"space-between" },
-  exItem: { width:"100%", background:"#141414", border:"none", borderLeft:"2px solid #2a2a2a", padding:"9px 14px 9px 20px", color:"#ccc", fontSize:13, cursor:"pointer", textAlign:"left", fontFamily:"inherit", display:"block" },
+  // Picker
+  catBtn: { width: "100%", background: C.card2, border: `1px solid ${C.border}`, borderRadius: 12, padding: "11px 14px", color: C.text, fontSize: 13, cursor: "pointer", textAlign: "left", fontFamily: FONT, fontWeight: 700, marginBottom: 6, display: "flex", justifyContent: "space-between", alignItems: "center" },
+  exItem: { width: "100%", background: C.card, border: `1px solid ${C.line}`, borderRadius: 10, padding: "10px 14px", color: C.text, fontSize: 13, cursor: "pointer", textAlign: "left", fontFamily: FONT, display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 5 },
+  exItemTag: { fontSize: 10, color: C.dim },
+  filterRow: { display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 },
+  filterChip: { fontSize: 11, padding: "6px 11px", borderRadius: 999, border: `1px solid ${C.border}`, background: C.card, color: C.dim, cursor: "pointer", fontFamily: FONT, fontWeight: 600 },
+  filterChipOn: { fontSize: 11, padding: "6px 11px", borderRadius: 999, border: `1px solid ${C.green}`, background: C.greenSoft, color: C.green, cursor: "pointer", fontFamily: FONT, fontWeight: 700 },
 
-  focusBanner: { background:"#0f1a1f", border:"1px solid #1a3a4a", borderRadius:8, padding:"8px 12px", fontSize:13, color:"#60a5fa", marginBottom:12 },
-  noteBox: { background:"#141414", borderLeft:"3px solid #a3e635", borderRadius:"0 8px 8px 0", padding:"10px 12px", fontSize:12, color:"#666", marginBottom:12, lineHeight:1.5 },
+  // Rest timer
+  timerBar: { position: "sticky", bottom: 0, background: "rgba(25,27,33,0.97)", backdropFilter: "blur(10px)", borderTop: `1px solid ${C.border}`, padding: "10px 14px", display: "flex", alignItems: "center", gap: 10, zIndex: 25 },
+  timerTime: { fontSize: 24, fontWeight: 800, color: C.green, fontVariantNumeric: "tabular-nums", minWidth: 74 },
+  timerBtn: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 10, width: 38, height: 38, color: C.text, fontSize: 16, cursor: "pointer", fontFamily: FONT },
 
-  importInstr: { background:"#141414", borderRadius:12, padding:"16px", marginBottom:16 },
-  importStep: { display:"flex", alignItems:"flex-start", gap:12, marginBottom:10, fontSize:13, color:"#888", lineHeight:1.5 },
-  stepNum: { background:"#a3e635", color:"#0c0c0c", borderRadius:"50%", width:22, height:22, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:12, flexShrink:0, marginTop:1 },
-  jsonArea: { width:"100%", background:"#0c0c0c", border:"1px solid #1e1e1e", borderRadius:8, padding:"12px", color:"#a3e635", fontSize:11, fontFamily:"'IBM Plex Mono', monospace", resize:"vertical", boxSizing:"border-box", lineHeight:1.6 },
-  errorBox: { background:"#1f0a0a", border:"1px solid #4a1a1a", borderRadius:8, padding:"10px 12px", color:"#f87171", fontSize:12, marginTop:8, marginBottom:8 },
-  primaryBtn: { width:"100%", background:"#a3e635", color:"#0c0c0c", border:"none", borderRadius:10, padding:"14px", fontWeight:800, fontSize:14, cursor:"pointer", fontFamily:"inherit", marginTop:12 },
+  // Profil
+  avatar: { width: 56, height: 56, borderRadius: 18, background: `linear-gradient(135deg,${C.greenDark},${C.green})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, flexShrink: 0 },
+  measGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 },
+  meas: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, padding: 10 },
+  photoThumb: { flex: 1, minWidth: 0, aspectRatio: "3/4", borderRadius: 12, objectFit: "cover", background: C.line },
+  analysisCard: { background: "#161c26", border: `1px solid #2a3a55`, borderRadius: 14, padding: 13, marginBottom: 8 },
 
-  toast: { position:"fixed", top:16, left:"50%", transform:"translateX(-50%)", color:"#0c0c0c", fontWeight:800, fontSize:13, padding:"10px 20px", borderRadius:10, zIndex:100, fontFamily:"inherit" },
-  empty: { color:"#333", textAlign:"center", padding:30, fontSize:13 },
+  // Selector
+  profileGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 16 },
+  profileCard: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 18, padding: "20px 12px", display: "flex", flexDirection: "column", alignItems: "center", gap: 10, cursor: "pointer", fontFamily: FONT },
+  profileAvatar: { width: 64, height: 64, borderRadius: 20, background: `linear-gradient(135deg,${C.greenDark},${C.green})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 },
 
-  exProgRow: { width:"100%", background:"#141414", border:"1px solid #1e1e1e", borderRadius:10, padding:"12px 14px", display:"flex", alignItems:"center", gap:10, marginBottom:8, cursor:"pointer", textAlign:"left" },
-  exProgLeft: { flex:1, display:"flex", flexDirection:"column", gap:4 },
-  exProgName: { fontWeight:700, fontSize:13 },
-  exProgBest: { fontSize:13, color:"#a3e635", fontWeight:700 },
+  // Misc
+  empty: { color: "#4a4f5a", textAlign: "center", padding: 30, fontSize: 13 },
+  errorBox: { background: C.redSoft, border: `1px solid #4a1a1a`, borderRadius: 10, padding: "10px 12px", color: C.red, fontSize: 12, marginTop: 8 },
+  toast: { position: "fixed", top: 16, left: "50%", transform: "translateX(-50%)", color: C.white, fontWeight: 700, fontSize: 13, padding: "10px 18px", borderRadius: 12, zIndex: 100, fontFamily: FONT, boxShadow: "0 6px 20px rgba(0,0,0,0.4)" },
+  chip: { display: "inline-block", fontSize: 11, padding: "4px 10px", borderRadius: 999, marginRight: 6, marginTop: 6 },
 };

@@ -5,3 +5,4 @@ dist
 .env*.local
 .env*
 .superpowers/
+.DS_Store

@@ -18,4 +18,16 @@ describe("validateSessions", () => {
     const bad = [{ label: "S", exercises: [{ name: "X", sets: [{ kg: "a", reps: 5 }] }] }];
     expect(validateSessions(bad).ok).toBe(false);
   });
+  it("accepte une séance cardio (distance/durée)", () => {
+    const data = [{ label: "Run", exercises: [
+      { name: "Course extérieure", type: "cardio", sets: [{ distance: 5, duration: 1500 }] },
+    ] }];
+    expect(validateSessions(data).ok).toBe(true);
+  });
+  it("rejette une série cardio avec distance non numérique", () => {
+    const bad = [{ label: "Run", exercises: [
+      { name: "Course extérieure", type: "cardio", sets: [{ distance: "loin", duration: 1500 }] },
+    ] }];
+    expect(validateSessions(bad).ok).toBe(false);
+  });
 });

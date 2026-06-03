@@ -29,6 +29,13 @@ perso**, plus motivante et moins « brute » :
 nouvelle (objectifs, profil, analyses, photos, réglages) ne vit uniquement dans
 le navigateur.
 
+**Multi-utilisateur léger (décidé en cours de route) :** l'app sert à Arthur **et
+ses potes**. On retient un **sélecteur de profils** façon Netflix : un seul mot de
+passe partagé pour entrer dans l'app, puis un écran « Qui es-tu ? ». Chaque profil
+a SES données (séances, objectifs, physique, photos, réglages). Pas de comptes
+individuels ni de mots de passe par personne, pas de vie privée entre profils
+(groupe de confiance). Toutes les tables de données portent un `user_id`.
+
 ## État de départ
 
 App existante fonctionnelle : SPA Vite/React mobile-first, thème terminal
@@ -71,8 +78,13 @@ un panneau Réglages :
 - **Réglages** (feuille/modale depuis l'en-tête) — durée de repos, seuil de reps,
   export/import JSON, déconnexion.
 
-`App.jsx` gère l'onglet actif (`tab`) + l'état d'édition. L'éditeur et
-`ExerciseProgress` restent des sous-vues plein écran (pas dans la barre).
+Avant les onglets, deux portes : **login** (mot de passe partagé) puis
+**sélecteur de profils** (`ProfileSelector` — « Qui es-tu ? », création de profil
+possible). Le profil choisi est mémorisé (`gymlog.uid`) et envoyé en en-tête
+`X-User-Id`. Un bouton « changer de profil » (dans Réglages / en-tête) y revient.
+
+`App.jsx` gère l'auth, le profil courant, l'onglet actif (`tab`) + l'état
+d'édition. L'éditeur et `ExerciseProgress` restent des sous-vues plein écran.
 
 ### Modèle de données
 
@@ -138,38 +150,51 @@ Progression calculée à la volée (jamais stockée) :
 
 Un seul objectif `pinned` à la fois = héros du dashboard.
 
-#### Profil & métriques corporelles
+#### Profils (utilisateurs) & métriques corporelles
 
-- `profile` (ligne unique) : `name`, `height_cm`, `level`, + réglages
-  `rest_seconds` (défaut 120), `reps_threshold` (défaut 13).
-- `body_metrics` : `{ id, date, kind, value }` où `kind ∈ weight, arm_l, arm_r,
-  chest, waist, thigh, …`. Poids de corps = `kind:"weight"`. Extensible sans
-  changer le schéma.
-- `analyses` : `{ id, date, text, focus[] }` — analyses de Claude horodatées,
-  `focus` = tags d'axes à améliorer (ex. `["Dos","Ischios"]`).
-- `photos` : `{ id, date, label, url }` — `url` pointe vers **Vercel Blob**.
+- `users` (= profils) : `{ id, name, emoji, height_cm, level, rest_seconds
+  (défaut 120), reps_threshold (défaut 13), created_at }`. Une ligne par personne.
+  Remplace l'idée d'une table `profile` à ligne unique.
+- `body_metrics` : `{ id, user_id, date, kind, value }` où `kind ∈ weight, arm_l,
+  arm_r, chest, waist, thigh, …`. Poids de corps = `kind:"weight"`. Extensible
+  sans changer le schéma.
+- `analyses` : `{ id, user_id, date, text, focus[] }` — analyses de Claude
+  horodatées, `focus` = tags d'axes à améliorer (ex. `["Dos","Ischios"]`).
+- `photos` : `{ id, user_id, date, label, url }` — `url` pointe vers **Vercel Blob**.
+- `sessions` et `goals` portent aussi un `user_id`.
+
+**Migration :** `ensureSchema` crée la table `users`, garantit un profil par
+défaut, ajoute `user_id` aux tables existantes si absent et rattache les anciennes
+lignes (les 7 séances seed) au profil par défaut.
 
 ### Backend (`/api`, serverless Vercel)
 
 Neon Postgres (client `@vercel/postgres` existant) + **Vercel Blob**
 (`@vercel/blob`) pour les photos. Tout protégé par `requireAuth`.
 
-Tables (créées par `ensureSchema`) : `sessions` (existante), `goals`, `profile`,
-`body_metrics`, `analyses`, `photos`. `seedIfEmpty` conserve l'insertion des 7
-séances et crée la ligne `profile` par défaut.
+Tables (créées par `ensureSchema`) : `users`, `sessions`, `goals`,
+`body_metrics`, `analyses`, `photos`. `seedIfEmpty` crée le profil par défaut
+(Arthur) + ses 7 séances seed.
+
+**Scoping :** `requireAuth` (mot de passe partagé) garde tous les endpoints. Les
+endpoints de données lisent l'en-tête `X-User-Id` (profil courant) et filtrent /
+insèrent avec ce `user_id` ; absent → 400. Les endpoints `users` sont globaux
+(pas de scoping, juste l'auth) car ils alimentent le sélecteur.
 
 Endpoints :
-- `GET/POST /api/sessions`, `PUT/DELETE /api/sessions/[id]` — existants, étendus
-  au champ `type` des exercices.
+- `GET/POST /api/users`, `GET/PUT/DELETE /api/users/[id]` — profils (identité +
+  réglages). DELETE supprime le profil et ses données (cascade).
+- `GET/POST /api/sessions`, `PUT/DELETE /api/sessions/[id]` — scoping `X-User-Id`,
+  étendus au champ `type`/cardio des exercices.
 - `GET/POST /api/goals`, `PUT/DELETE /api/goals/[id]`.
-- `GET/PUT /api/profile` (inclut les réglages).
 - `GET/POST /api/metrics`, `DELETE /api/metrics/[id]` (poids + mensurations).
 - `GET/POST /api/analyses`, `DELETE /api/analyses/[id]`.
 - `GET/POST /api/photos`, `DELETE /api/photos/[id]` — POST envoie le fichier vers
   Blob et enregistre l'URL ; DELETE supprime Blob + ligne.
 
-Logique partagée `api/_lib.js` étendue : `ensureSchema` (toutes les tables),
-`seedIfEmpty`, `requireAuth` (inchangé).
+Logique partagée `api/_lib.js` étendue : `ensureSchema` (toutes les tables +
+migration `user_id`), `seedIfEmpty`, `requireAuth` (inchangé), `requireUser(req)`
+(lit/valide `X-User-Id`).
 
 ### Couche cliente
 
@@ -192,7 +217,8 @@ Logique partagée `api/_lib.js` étendue : `ensureSchema` (toutes les tables),
 
 ### Composants (`src/components/`)
 
-- **Coquille** : `App.jsx` (onglets), `TabBar.jsx`, `Settings.jsx`.
+- **Coquille** : `App.jsx` (auth + profil + onglets), `ProfileSelector.jsx`
+  (« Qui es-tu ? » + création), `TabBar.jsx`, `Settings.jsx`.
 - **Dashboard** : `Dashboard.jsx` (héros objectif, liste objectifs, KPIs, « ça
   progresse » avec nudges reps). Remplace l'usage actuel de `Progress` comme
   écran d'accueil de stats.
@@ -274,7 +300,8 @@ Profil), structuré ainsi :
 
 ## Hors périmètre (YAGNI)
 
-- Multi-utilisateurs / comptes.
+- **Comptes individuels** (identifiant + mot de passe par personne) et vie privée
+  entre profils : on s'arrête au sélecteur de profils sous mot de passe commun.
 - GPS / cartes / traces pour la course (saisie manuelle uniquement).
 - Génération de plan **dans** l'app (c'est l'IA externe via l'export qui le fait).
 - Timer en arrière-plan / notifications push / service worker.
